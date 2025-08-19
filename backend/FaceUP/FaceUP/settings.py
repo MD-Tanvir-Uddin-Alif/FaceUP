@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-AUTH_USER_MODEL = 'Profile.UserProfilrModel'
+AUTH_USER_MODEL = 'Profile.UserProfileModel'
 
 # Application definition
 
