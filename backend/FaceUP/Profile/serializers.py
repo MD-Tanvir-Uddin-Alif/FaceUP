@@ -41,4 +41,3 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfileModel
         fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_Number', 'image', 'address']
         read_only_fields = ['id', 'username']
-    
