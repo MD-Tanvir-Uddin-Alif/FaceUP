@@ -14,7 +14,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 Profile = get_user_model()
 
 class UserProfileCreateView(CreateAPIView):
-    queryset = UserProfileModel
+    queryset = UserProfileModel.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [AllowAny]
 
