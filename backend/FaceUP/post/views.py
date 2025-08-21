@@ -6,7 +6,7 @@ from .serializers import PostSerializer
 
 
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 # Create your views here.
 
 
@@ -50,3 +50,9 @@ class UserPostUpdateDeleteView(RetrieveUpdateDestroyAPIView):
         cache_key = f"user_post_list{instance.author.id}"
         cache.delete(cache_key)
         instance.delete()
+
+
+class PostListView(ListAPIView):
+    queryset = PostModel.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [AllowAny]
