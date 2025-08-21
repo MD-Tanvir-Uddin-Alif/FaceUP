@@ -17,6 +17,8 @@ class PostCreateView(CreateAPIView):
     
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+        cache_key = f"user_post_list{self.request.user.id}"
+        cache.delete(cache_key)
 
 
 
@@ -35,5 +37,16 @@ class UserPostListView(ListAPIView):
 
 
 class UserPostUpdateDeleteView(RetrieveUpdateDestroyAPIView):
-    queryset = PostModel
+    queryset = PostModel.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
     
+    def perform_update(self, serializer):
+        instence = serializer.save()
+        cache_key = f"user_post_list{instence.author.id}"
+        cache.delete(cache_key)
+
+    def perform_destroy(self, instance):
+        cache_key = f"user_post_list{instance.author.id}"
+        cache.delete(cache_key)
+        instance.delete()
