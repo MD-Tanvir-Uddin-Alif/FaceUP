@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from .models import UserProfileModel
 from .serializers import UserProfileSerializer
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
@@ -37,4 +38,19 @@ class UserProfileView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_object(self):
-        return self.request.user
+        user = self.request.user
+        cache_key = f"user_profile_{user.id}"
+        
+        profile = cache.get(cache_key)
+        if profile is not None:
+            return profile
+        profile = user
+        cache.set(cache_key, profile, timeout=60)
+        return profile
+
+    def perform_update(self, serializer):
+        instence = serializer.save()
+        cache_key = f"user_profile_{instence.id}"
+        cache.set(cache_key, instence, timeout=60)
+        return instence
+        
