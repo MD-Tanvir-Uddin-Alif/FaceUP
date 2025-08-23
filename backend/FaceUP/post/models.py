@@ -17,6 +17,7 @@ class PostModel(models.Model):
 class CommentModel(models.Model):
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
     author = models.ForeignKey(UserProfileModel, on_delete=models.CASCADE)
+    content = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

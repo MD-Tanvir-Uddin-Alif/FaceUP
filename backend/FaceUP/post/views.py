@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.core.cache import cache
 
-from .models import PostModel
-from .serializers import PostSerializer
+from .models import PostModel, CommentModel
+from .serializers import PostSerializer, CommentSerializer
 
 
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
@@ -56,3 +56,13 @@ class PostListView(ListAPIView):
     queryset = PostModel.objects.all()
     serializer_class = PostSerializer
     permission_classes = [AllowAny]
+
+
+class CommentCreatedView(CreateAPIView):
+    queryset = CommentModel
+    serializer_class = CommentSerializer
+    permission_classes = [AllowAny]
+    
+    def perform_create(self, serializer):
+        post_id = self.kwargs["post_id"]
+        return serializer.save(author=self.request.user, post_id=post_id)
