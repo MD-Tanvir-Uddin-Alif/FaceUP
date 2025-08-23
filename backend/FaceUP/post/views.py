@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.cache import cache
 
-from .models import PostModel, CommentModel
-from .serializers import PostSerializer, CommentSerializer
+from .models import PostModel, CommentModel, LikeModel
+from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 
 
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 # Create your views here.
 
@@ -66,3 +68,17 @@ class CommentCreatedView(CreateAPIView):
     def perform_create(self, serializer):
         post_id = self.kwargs["post_id"]
         return serializer.save(author=self.request.user, post_id=post_id)
+
+
+class LikeDislikeView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, post_id):
+        post = get_object_or_404(PostModel, id=post_id)
+        like , created = LikeModel.objects.get_or_create(user=request.user, post=post)
+        
+        if not created:
+            like.delete()
+            return Response({"message": "Unliked"})
+        return Response({"message": "Liked"})
+
