@@ -12,3 +12,12 @@ class PostModel(models.Model):
     
     def __str__(self):
         return f"{self.author.username}"
+
+
+class CommentModel(models.Model):
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
+    author = models.ForeignKey(UserProfileModel, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.author.username} on post {self.post.id}"
