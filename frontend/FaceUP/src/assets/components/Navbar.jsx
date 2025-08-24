@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -11,8 +12,8 @@ const Navbar = () => {
                 </div>
 
                 <div class="flex items-center space-x-6">
-                <a href="/" class="text-black font-semibold hover:underline">Home</a>
-                <a href="/events" class="text-black font-semibold hover:underline">Events</a>
+                    <NavLink to='/' className={({ isActive }) => `text-black font-semibold ${isActive ? 'underline' : ''}`}>Home</NavLink>
+                    <a href="/events" class="text-black font-semibold hover:underline">Events</a>
                 </div>
 
                 <div>
