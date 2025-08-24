@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import Navbar from './assets/components/Navbar'
 
 function App() {
 
   return (
     <div>
-      <h1 className='bg-black text-red-600'>Forntend Initialised</h1>
+      <Navbar/>
     </div>
   )
 }
