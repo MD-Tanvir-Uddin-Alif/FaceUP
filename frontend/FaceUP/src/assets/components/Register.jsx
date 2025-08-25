@@ -4,7 +4,6 @@ import { Camera } from "lucide-react";
 import { toast } from "react-toastify";
 import axiosPublic from "../../utils/axiospublic";
 
-// Move InputField outside the main component to prevent unnecessary re-renders
 const InputField = ({ label, type = "text", placeholder, value, onChange, name, maxLength }) => (
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>

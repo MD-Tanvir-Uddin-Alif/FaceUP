@@ -8,7 +8,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfileModel
-        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_Number', 'image', 'address', 'password', 'password2']
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_number', 'image', 'address', 'password', 'password2']
         
         extra_kwargs = {
             'first_name':{'required':True},
@@ -18,11 +18,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'password':{'write_only':True},
         }
     
+    def validate_username(self,value):
+        if UserProfileModel.objects.filter(username=value):
+            raise serializers.ValidationError("Username already exsits")
+        return value
+        
+    
     def validate(self, attrs):
         password = attrs.get('password')
         
         if password != attrs.get("password2"):
-            raise serializers.ValidationError({"Password: Password did not match"})
+            raise serializers.ValidationError({"password: Password did not match"})
         validate_password(password)
         return attrs
 
@@ -32,7 +38,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         
         user = UserProfileModel.objects.create_user(**validated_data)
         user.set_password(password)
-        user.save
+        user.save()
         return user
 
 
