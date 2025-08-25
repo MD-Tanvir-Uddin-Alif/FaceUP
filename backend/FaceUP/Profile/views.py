@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from .models import UserProfileModel
-from .serializers import UserProfileSerializer
+from .serializers import UserProfileSerializer, UserProfileRegistrationSerializer
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
@@ -15,7 +15,7 @@ Profile = get_user_model()
 
 class UserProfileCreateView(CreateAPIView):
     queryset = UserProfileModel.objects.all()
-    serializer_class = UserProfileSerializer
+    serializer_class = UserProfileRegistrationSerializer
     permission_classes = [AllowAny]
 
 

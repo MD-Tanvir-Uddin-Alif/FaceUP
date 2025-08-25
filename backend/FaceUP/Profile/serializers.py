@@ -3,7 +3,7 @@ from .models import UserProfileModel
 from django.contrib.auth.password_validation import validate_password
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserProfileRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
     
     class Meta:
@@ -17,6 +17,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'email':{'required':True},
             'password':{'write_only':True},
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("Serializer fields:", self.Meta.fields) 
     
     def validate_username(self,value):
         if UserProfileModel.objects.filter(username=value):
@@ -45,5 +49,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfileModel
-        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_Number', 'image', 'address']
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_number', 'image', 'address']
         read_only_fields = ['id', 'username']
