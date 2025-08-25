@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Camera } from "lucide-react";
 import { toast } from "react-toastify";
+import axiosPublic from "../../utils/axiospublic";
 
 // Move InputField outside the main component to prevent unnecessary re-renders
 const InputField = ({ label, type = "text", placeholder, value, onChange, name, maxLength }) => (
@@ -25,7 +26,7 @@ const Register = () => {
     last_name: "",
     username: "",
     email: "",
-    phone_number: "",
+    phone_Number: "",
     image: null,
     address: "",
     password: "",
@@ -54,15 +55,26 @@ const Register = () => {
       return;
     }
 
-    console.log("Form Data:", formData);
 
-    // To send to backend
-    // const formDataToSend = new FormData();
-    // Object.entries(formData).forEach(([key, value]) =>
-    //   formDataToSend.append(key, value)
-    // );
+    try{
+      const formDatatosend = new FormData();
+      Object.entries(formData).forEach(([key, value])=>{
+      formDatatosend.append(key, value);
+      });
+      
+      const responce = await axiosPublic.post('/api/user/registration/', formDatatosend,{
+        headers: {
+              "Content-Type": 'multipart/form-data',
+            },
+      })
+      console.log("Form Data:", formData);
+      toast.success("Account created successfully 🚀");
+    }catch(err){
+      console.log(err.response.data);
+      toast.error("Registrations Failed. Please try again");
+    }
+    
 
-    toast.success("Account created successfully 🚀");
   };
 
   return (
@@ -132,10 +144,11 @@ const Register = () => {
             <InputField
               label="Phone Number"
               type="tel"
-              name="phone_number"
+              name="phone_Number"
               placeholder="123-456-7890"
-              value={formData.phone_number}
+              value={formData.phone_Number}
               onChange={handleChange}
+              maxLength={11}
             />
             <InputField
               label="Address"
