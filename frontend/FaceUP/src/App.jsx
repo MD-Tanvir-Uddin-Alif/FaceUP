@@ -5,6 +5,7 @@ import Navbar from './assets/components/Navbar'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Home from './assets/components/Home'
 import Register from './assets/components/Register'
+import Login from './assets/components/Login';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='user/registration/' element={<Register/>}/>
+          <Route path='user/login/' element={<Login/>}/>
         </Routes>
       </HashRouter>
     </div>
