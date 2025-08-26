@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const [userProfile, setUserProfile] = useState(null);
     const [isLogin, setIsLogin] = useState(!!localStorage.getItem('accessToken'));
     useEffect(() => {
@@ -43,6 +44,26 @@ const Navbar = () => {
         if (!userProfile) return 'https://via.placeholder.com/60';
         return userProfile.image || 'https://i.pravatar.cc/150?img=5';
     };
+
+    const handleLogout = async () => {
+
+    try{
+      const refreshToken = localStorage.getItem('refreshToken');
+      await axiosInstance.post('/api/user/logout/',{
+        refresh: refreshToken,
+      });
+
+      localStorage.clear();
+      setIsLogin(false);
+      setUserProfile(null);
+      navigate('/user/login/');
+    }catch(err){
+      localStorage.clear();
+      setIsLogin(false);
+      setUserProfile(null);
+      navigate('/user/login');
+    }
+  };
 
 
 
@@ -85,15 +106,10 @@ const Navbar = () => {
                 <Link to='/user/profile'>
                 <button className="w-full text-left block px-4 py-2 text-sm hover:bg-black hover:text-white transition">Profile</button>
                 </Link>
-                {/* <button onClick={handleLogout} className="w-full text-left block px-4 py-2 text-sm hover:bg-black hover:text-white transition">Logout</button> */}
+                <button onClick={handleLogout} className="w-full text-left block px-4 py-2 text-sm hover:bg-black hover:text-white transition">Logout</button>
               </div>
             </div>
                 )}
-                <Link to='user/login/'>
-                    <button class="rounded-md border border-black px-4 py-2 text-sm font-medium text-black hover:bg-black hover:text-white transition">
-                    Login
-                    </button>
-                </Link>
                 </div>
 
             </div>
