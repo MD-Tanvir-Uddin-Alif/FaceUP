@@ -10,3 +10,13 @@ export const getProfile = async () => {
         throw error;
     }
 }
+
+export const updateProfile = async ()=>{
+    try{
+        const response = await axiosInstance.patch('/api/user/info/');
+        return response.data;
+    } catch (error) {
+        console.error('Error updading profie:', error);
+        throw error;
+    }
+}
