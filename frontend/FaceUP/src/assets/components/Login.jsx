@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import axiosPublic from '../../utils/axiospublic';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -15,9 +17,26 @@ const Login = () => {
         });
     };
 
-    const handleSubmission = (e)=>{
+    const handleSubmission = async(e)=>{
         e.preventDefault();
-        console.log(formData);
+        try{
+            const responce = await axiosPublic.post('/api/user/login/',{
+                username: formData.username,
+                password: formData.password
+            });
+
+            const {refresh, access } =responce.data;
+            console.log(refresh, access);
+            if(refresh && access)
+            {
+                localStorage.setItem('refreshToken', refresh);
+                localStorage.setItem('accessToken', access);
+                toast.success("Login successful");
+            }
+        } catch(err){
+            toast.error("Login failed. Please provide the correct information");
+            console.log(err.responce?.data|| err.message);
+        }
     };
 
 
