@@ -18,9 +18,9 @@ class UserProfileRegistrationSerializer(serializers.ModelSerializer):
             'password':{'write_only':True},
         }
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        print("Serializer fields:", self.Meta.fields) 
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     print("Serializer fields:", self.Meta.fields) 
     
     def validate_username(self,value):
         if UserProfileModel.objects.filter(username=value):

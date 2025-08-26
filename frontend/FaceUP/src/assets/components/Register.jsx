@@ -25,7 +25,7 @@ const Register = () => {
     last_name: "",
     username: "",
     email: "",
-    phone_Number: "",
+    phone_number: "",
     image: null,
     address: "",
     password: "",
@@ -143,9 +143,9 @@ const Register = () => {
             <InputField
               label="Phone Number"
               type="tel"
-              name="phone_Number"
+              name="phone_number"
               placeholder="123-456-7890"
-              value={formData.phone_Number}
+              value={formData.phone_number}
               onChange={handleChange}
               maxLength={11}
             />
