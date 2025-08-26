@@ -1,5 +1,6 @@
 import React from 'react'
 import { useUserProfile } from '../../hooks/useUser'
+import { Link } from 'react-router-dom'
 
 const UserProfile = () => {
     const { data: profile, isLoading, error } = useUserProfile();
@@ -41,9 +42,11 @@ const UserProfile = () => {
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-                <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-                Edit Profile
-                </button>
+                <Link to='/user/profile/update/'>
+                    <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
+                        Edit Profile
+                    </button>
+                </Link>
             </div>
         </div>
         </div>
