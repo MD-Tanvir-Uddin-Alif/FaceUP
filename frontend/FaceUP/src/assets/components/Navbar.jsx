@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import axiosInstance from '../../utils/axiosInstance';
 
 const Navbar = () => {
     const [userProfile, setUserProfile] = useState(null);
@@ -21,6 +22,27 @@ const Navbar = () => {
       window.removeEventListener('loginStatusChanged', updateLoginStatus);
     };
   }, []);
+
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (isLogin) {
+        try {
+          const res = await axiosInstance.get('/api/user/info/');
+          setUserProfile(res.data);
+        } catch (err) {
+          console.error('Failed to fetch profile:', err);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [isLogin]);
+
+    const getProfileImage = () => {
+        if (!userProfile) return 'https://via.placeholder.com/60';
+        return userProfile.image || 'https://i.pravatar.cc/150?img=5';
+    };
 
 
 
@@ -59,12 +81,12 @@ const Navbar = () => {
                 />
               </label>
 
-              {/* <div className="dropdown-menu hidden peer-checked:block absolute right-0 mt-2 w-40 bg-white border border-black rounded-lg shadow-md z-10">
-                <Link to='/profile'>
+              <div className="dropdown-menu hidden peer-checked:block absolute right-0 mt-2 w-40 bg-white border border-black rounded-lg shadow-md z-10">
+                <Link to='/user/profile'>
                 <button className="w-full text-left block px-4 py-2 text-sm hover:bg-black hover:text-white transition">Profile</button>
                 </Link>
-                <button onClick={handleLogout} className="w-full text-left block px-4 py-2 text-sm hover:bg-black hover:text-white transition">Logout</button>
-              </div> */}
+                {/* <button onClick={handleLogout} className="w-full text-left block px-4 py-2 text-sm hover:bg-black hover:text-white transition">Logout</button> */}
+              </div>
             </div>
                 )}
                 <Link to='user/login/'>
