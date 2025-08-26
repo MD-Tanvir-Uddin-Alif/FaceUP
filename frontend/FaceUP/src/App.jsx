@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './assets/components/Navbar'
+import PrivateRoute from './utils/PrivateRoute'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Home from './assets/components/Home'
 import Register from './assets/components/Register'
 import Login from './assets/components/Login';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import UserProfile from './assets/components/UserProfile';
 
 
 
@@ -26,6 +28,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='user/registration/' element={<Register/>}/>
           <Route path='user/login/' element={<Login/>}/>
+          <Route path='user/profile/' element={<PrivateRoute><UserProfile/></PrivateRoute>}/>
         </Routes>
         </HashRouter>
         <ReactQueryDevtools initialIsOpen={false}/>
