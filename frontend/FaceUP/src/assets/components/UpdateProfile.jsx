@@ -29,7 +29,7 @@ const UpdateProfile = () => {
         email: profile.email || "",
         phone_number: profile.phone_number || "",
         address: profile.address || "",
-        image: profile.image || "",
+        // Don't include image URL in formData - only include when user selects a new file
       });
       setImagePreview(profile.image || null);
     }
@@ -40,8 +40,20 @@ const UpdateProfile = () => {
 
     if (type === "file") {
       const file = files[0] || null;
-      setFormData((prevData) => ({ ...prevData, [name]: file }));
-      setImagePreview(file ? URL.createObjectURL(file) : null);
+      
+      if (file) {
+        // Only update formData if a file is actually selected
+        setFormData((prevData) => ({ ...prevData, [name]: file }));
+        setImagePreview(URL.createObjectURL(file));
+      } else {
+        // If no file selected, remove the image field from formData
+        setFormData((prevData) => {
+          const newData = { ...prevData };
+          delete newData[name]; // Remove image field entirely
+          return newData;
+        });
+        setImagePreview(profile?.image || null); // Reset to original image
+      }
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
@@ -49,6 +61,26 @@ const UpdateProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("=== FORM SUBMISSION DEBUG ===");
+    console.log("Raw formData:", formData);
+    
+    // Debug: Check what's being sent
+    const debugFormData = new FormData();
+    Object.keys(formData).forEach(key => {
+      if (formData[key] !== null && formData[key] !== undefined && formData[key] !== "") {
+        debugFormData.append(key, formData[key]);
+        console.log(`Adding to FormData: ${key} =`, formData[key]);
+      } else {
+        console.log(`Skipping empty field: ${key} =`, formData[key]);
+      }
+    });
+    
+    // Log FormData contents
+    console.log("FormData entries:");
+    for (let pair of debugFormData.entries()) {
+      console.log(pair[0] + ': ', pair[1]);
+    }
+    
     updateProfileMutation.mutate(formData);
   };
 
@@ -84,6 +116,24 @@ const UpdateProfile = () => {
           ? "Loading profile..."
           : `This is update profile: ${profile?.username}`}
       </p>
+
+      {/* Debug Panel */}
+      <div className="bg-gray-100 p-4 m-4 rounded-lg">
+        <h3 className="font-bold mb-2">Debug Info:</h3>
+        <pre className="text-xs overflow-x-auto">
+          {JSON.stringify(formData, null, 2)}
+        </pre>
+        {updateProfileMutation.error && (
+          <div className="mt-2 p-2 bg-red-100 rounded">
+            <p className="text-red-700 font-semibold">Error Details:</p>
+            <p className="text-red-600 text-sm">
+              {updateProfileMutation.error.response?.data 
+                ? JSON.stringify(updateProfileMutation.error.response.data, null, 2)
+                : updateProfileMutation.error.message}
+            </p>
+          </div>
+        )}
+      </div>
 
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-5">
         <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-lg">
@@ -168,9 +218,10 @@ const UpdateProfile = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition duration-300 shadow-md"
+              disabled={updateProfileMutation.isPending}
+              className="w-full py-3.5 bg-black hover:bg-gray-800 disabled:bg-gray-400 text-white font-medium rounded-lg transition duration-300 shadow-md"
             >
-              Save Changes
+              {updateProfileMutation.isPending ? "Saving..." : "Save Changes"}
             </button>
           </form>
         </div>
