@@ -11,24 +11,6 @@ export const useUserProfile = () => {
     });
 }
 
-
-// export const useUpdateProfile = () => {
-//     const queryClient = useQueryClient();
-
-//     return useMutation({
-//         mutationFn: updateProfile, 
-//         onSuccess: (data) => { 
-//             queryClient.setQueryData(["profile"], data);
-//             queryClient.invalidateQueries(["profile"]);
-//             toast.success("Profile updated successfully!");
-//         },
-//         onError: (error) => {
-//             console.error('Update failed:', error);
-//             toast.error("Failed to update profile");
-//         },
-//     });
-// }
-
 export const useUpdateProfile = () => {
     const queryClient = useQueryClient();
 
