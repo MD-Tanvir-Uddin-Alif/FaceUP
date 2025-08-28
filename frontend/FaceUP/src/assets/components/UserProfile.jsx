@@ -47,6 +47,11 @@ const UserProfile = () => {
                         Edit Profile
                     </button>
                 </Link>
+                <Link to='/post/create/'>
+                    <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
+                        Post
+                    </button>
+                </Link>
             </div>
         </div>
         </div>

@@ -11,6 +11,7 @@ import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-qu
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import UserProfile from './assets/components/UserProfile';
 import UpdateProfile from './assets/components/UpdateProfile';
+import PostCreate from './assets/components/PostCreate';
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='user/login/' element={<Login/>}/>
           <Route path='user/profile/' element={<PrivateRoute><UserProfile/></PrivateRoute>}/>
           <Route path='user/profile/update/' element={<PrivateRoute><UpdateProfile/></PrivateRoute>}/>
+          <Route path='post/create/' element={<PrivateRoute><PostCreate/></PrivateRoute>}/>
         </Routes>
         </HashRouter>
         <ReactQueryDevtools initialIsOpen={false}/>
