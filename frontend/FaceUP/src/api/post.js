@@ -1,6 +1,7 @@
 import { Key } from "lucide-react";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "react-toastify";
+import axiosPublic from "../utils/axiospublic";
 
 export const createPost = async (formData)=> {
     console.log("in api",formData);
@@ -23,6 +24,18 @@ export const createPost = async (formData)=> {
     }catch(error){
         console.error("Create post error:", error.response?.data || error.message);
         toast.error("something went wrong");
+        throw error;
+    }
+}
+
+
+
+export const publicPost = async ()=>{
+    try{
+        const response = await axiosPublic.get('/api/post/all/');
+        return response.data;
+    } catch(error){
+        console.error('Error fetching post:', error);
         throw error;
     }
 }
