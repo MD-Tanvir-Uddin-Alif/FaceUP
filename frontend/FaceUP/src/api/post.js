@@ -2,16 +2,17 @@ import { Key } from "lucide-react";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "react-toastify";
 
-export const createPost = async (postData)=> {
+export const createPost = async (formData)=> {
+    console.log("in api",formData);
     try{
-        const formData = new FormData();
-        if(postData.content){
-            formData.append("content", postData.content);
-        }
+        // const formData = new FormData();
+        // if(postData.content){
+        //     formData.append("content", postData.content);
+        // }
 
-        if(postData.image && postData.image instanceof File){
-            formData.append("image", postData.image);
-        }
+        // if(postData.image && postData.image instanceof File){
+        //     formData.append("image", postData.image);
+        // }
 
         const response = await axiosInstance.post('/api/post/create/',formData,{
             headers: {"Content-Type": "multipart/form-data"}

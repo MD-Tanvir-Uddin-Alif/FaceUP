@@ -9,6 +9,7 @@ export const usePostCreate = ()=>{
     return useMutation({
         mutationFn: createPost,
         onSuccess: (data)=>{
+            console.log(data);
             queryClient.invalidateQueries(["posts"]);
         },
         onError: (error)=>{

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-// import { createPost } from '../../api/post';
+import { createPost } from '../../api/post';
 import { usePostCreate } from '../../hooks/usePost';
 
 const PostCreate = () => {
@@ -9,7 +9,7 @@ const PostCreate = () => {
     const {mutate: createPost, isLoading} = usePostCreate();
 
     const handelImage = (e)=>{
-        setImage(e.target.file[0]);
+        setImage(e.target.files[0]);
     }
 
     const handleSubmit = (e)=>{
@@ -29,14 +29,12 @@ const PostCreate = () => {
 
   return (
     <div className="flex flex-col w-full max-w-[512px] md:max-w-[960px] py-5 mx-auto">
-      {/* Header */}
       <div className="flex justify-between items-center p-4">
         <p className="text-[#1c1c0d] text-2xl md:text-3xl font-bold leading-tight">
           Create Post
         </p>
       </div>
 
-      {/* Textarea */}
       <div className="flex flex-col w-full max-w-[480px] gap-4 px-4 py-3">
         <label className="w-full">
           <textarea
@@ -48,7 +46,6 @@ const PostCreate = () => {
         </label>
       </div>
 
-      {/* Image Upload */}
       <div className="flex flex-col p-4">
         <div className="flex flex-col items-center gap-6 rounded-xl border-2 border-dashed border-[#e9e8ce] px-6 py-14">
           <div className="flex flex-col items-center gap-2 text-center">
@@ -56,7 +53,6 @@ const PostCreate = () => {
             <p className="text-sm text-[#1c1c0d]">Drag and drop or click to upload</p>
           </div>
 
-          {/* Actual hidden input */}
           <input
             type="file"
             accept="image/*"
@@ -65,7 +61,6 @@ const PostCreate = () => {
             className="hidden"
           />
 
-          {/* Styled button that triggers input */}
           <label
             htmlFor="upload-input"
             className="h-10 px-4 flex items-center justify-center rounded-full bg-[#f4f4e6] text-sm font-bold text-[#1c1c0d] hover:bg-[#e9e8ce] transition cursor-pointer"
@@ -75,12 +70,11 @@ const PostCreate = () => {
         </div>
       </div>
 
-      {/* Submit button */}
       <div className="flex justify-end px-4 py-3">
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="h-10 px-6 rounded-full bg-[#f9f506] text-sm font-bold text-[#1c1c0d] hover:bg-[#e1df06] transition disabled:opacity-50"
+          className="h-10 px-6 rounded-full border border-black bg-white text-sm font-bold text-[#1c1c0d] transition disabled:opacity-50"
         >
           {isLoading ? "Posting..." : "Post"}
         </button>
