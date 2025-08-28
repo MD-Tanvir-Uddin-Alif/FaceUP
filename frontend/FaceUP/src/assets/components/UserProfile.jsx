@@ -48,7 +48,7 @@ const UserProfile = () => {
                     </button>
                 </Link>
                 <Link to='/post/create/'>
-                    <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
+                    <button className="px-4 py-2 bg-white text-black rounded-lg border-black border hover:bg-black transition hover:text-white">
                         Post
                     </button>
                 </Link>
