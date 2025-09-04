@@ -12,6 +12,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import UserProfile from './assets/components/UserProfile';
 import UpdateProfile from './assets/components/UpdateProfile';
 import PostCreate from './assets/components/PostCreate';
+import PublicPost from './assets/components/PublicPost';
 
 
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='user/registration/' element={<Register/>}/>
           <Route path='user/login/' element={<Login/>}/>
+          <Route path='public/post/' element={<PublicPost/>}/>
           <Route path='user/profile/' element={<PrivateRoute><UserProfile/></PrivateRoute>}/>
           <Route path='user/profile/update/' element={<PrivateRoute><UpdateProfile/></PrivateRoute>}/>
           <Route path='post/create/' element={<PrivateRoute><PostCreate/></PrivateRoute>}/>
