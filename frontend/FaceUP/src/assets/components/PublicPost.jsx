@@ -1,8 +1,10 @@
 import React from "react";
 import { usePublicPost } from "../../hooks/usePost";
+import { useNavigate } from "react-router-dom";
 
 const PublicPost = () => {
   const { data: posts, isLoading, isError, error } = usePublicPost();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -35,7 +37,7 @@ const PublicPost = () => {
                 <div className="aspect-video w-full bg-cover bg-center"style={{backgroundImage: `url(${post.image})`,}}></div>
                 )}
               <div className="flex flex-col gap-2 p-5">
-                <p className="text-sm font-medium text-[#9e9d47]">
+                <p onClick={()=> navigate('/ppst/detail/', {state:post})} className="text-sm font-medium text-[#9e9d47]">
                   By {post.author || "Unknown"}
                 </p>
                 <p className="text-base leading-relaxed text-[#1c1c0d]">
