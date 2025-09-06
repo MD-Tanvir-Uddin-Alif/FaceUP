@@ -96,6 +96,10 @@ const UserProfile = () => {
                 >
                   {post.content}
                 </p>
+                 <div className="flex gap-3 mt-4">
+                  <button className="px-4 py-2 rounded-lg border border-black bg-black text-white hover:bg-white hover:text-black transition">Update</button>
+                  <button className="px-4 py-2 rounded-lg border border-black bg-white text-black hover:bg-black hover:text-white transition">Delete</button>
+                </div>
               </div>
             </div>
           ))
