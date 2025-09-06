@@ -37,10 +37,10 @@ const PublicPost = () => {
                 <div className="aspect-video w-full bg-cover bg-center"style={{backgroundImage: `url(${post.image})`,}}></div>
                 )}
               <div className="flex flex-col gap-2 p-5">
-                <p onClick={()=> navigate('/post/detail/', {state:post})} className="text-sm font-medium text-[#9e9d47]">
+                <p className="text-sm font-medium text-[#9e9d47]">
                   By {post.author || "Unknown"}
                 </p>
-                <p className="text-base leading-relaxed text-[#1c1c0d]">
+                <p onClick={()=> navigate('/post/detail/', {state:post})} className="text-base leading-relaxed text-[#1c1c0d]">
                   {post.content}
                 </p>
               </div>

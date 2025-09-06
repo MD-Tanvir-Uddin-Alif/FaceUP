@@ -39,3 +39,14 @@ export const publicPost = async ()=>{
         throw error;
     }
 }
+
+
+export const userPost = async ()=>{
+    try{
+        const response = await axiosPublic.get('/api/post/user/');
+        return response.data;
+    }catch (error){
+        console.error("Error fetching user post:", error);
+        throw error;
+    }
+}

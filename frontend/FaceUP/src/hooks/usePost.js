@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createPost, publicPost } from "../api/post";
+import { createPost, publicPost, userPost } from "../api/post";
 
 
 
@@ -22,6 +22,15 @@ export const usePublicPost = ()=>{
     return useQuery({
         queryKey: ["Posts"],
         queryFn: publicPost,
+        staleTime: 5 * 60 * 1000,
+        retry: 2
+    })
+}
+
+export const useUserPost = ()=>{
+    return useQuery({
+        queryKey: ["userPosts"],
+        queryFn: userPost,
         staleTime: 5 * 60 * 1000,
         retry: 2
     })
