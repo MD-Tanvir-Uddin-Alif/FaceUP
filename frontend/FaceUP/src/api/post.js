@@ -6,15 +6,6 @@ import axiosPublic from "../utils/axiospublic";
 export const createPost = async (formData)=> {
     console.log("in api",formData);
     try{
-        // const formData = new FormData();
-        // if(postData.content){
-        //     formData.append("content", postData.content);
-        // }
-
-        // if(postData.image && postData.image instanceof File){
-        //     formData.append("image", postData.image);
-        // }
-
         const response = await axiosInstance.post('/api/post/create/',formData,{
             headers: {"Content-Type": "multipart/form-data"}
         });
@@ -43,7 +34,7 @@ export const publicPost = async ()=>{
 
 export const userPost = async ()=>{
     try{
-        const response = await axiosPublic.get('/api/post/user/');
+        const response = await axiosInstance.get('/api/post/user/');
         return response.data;
     }catch (error){
         console.error("Error fetching user post:", error);
