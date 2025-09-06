@@ -5,6 +5,20 @@ const DetailsPost = () => {
   const location = useLocation();
   const post = location?.state;
 
+
+
+  const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  };
+
+
   if (!post) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -44,10 +58,11 @@ const DetailsPost = () => {
                   {comment.author || "Anonymous"}
                 </p>
                 <span className="text-sm text-[#9e9d47]">
-                  {comment.created_at || ""}
+                  {/* {comment.created_at || ""} */}
+                  {formatDate(comment.created_at)}
                 </span>
               </div>
-              <p className="text-sm text-[#1c1c0d]">{comment.text}</p>
+              <p className="text-sm text-[#1c1c0d]">{comment.content}</p>
             </div>
           ))
         ) : (
