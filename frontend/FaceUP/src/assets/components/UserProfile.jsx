@@ -1,17 +1,48 @@
 import React from 'react'
 import { useUserProfile } from '../../hooks/useUser'
-import { useUserPost } from '../../hooks/usePost'
+import { useUserPost, useUserDeletePost } from '../../hooks/usePost'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
 
 const UserProfile = () => {
-  const { data: profile, isLoading, error } = useUserProfile()
-  const { data: posts, isLoading: postsLoading, isError: postsError, error: postsErrorData } = useUserPost()
-  const navigate = useNavigate()
+  const { data: profile, isLoading, error } = useUserProfile();
+  const { data: posts, isLoading: postsLoading, isError: postsError, error: postsErrorData } = useUserPost();
+  const { mutate: deletePost, isLoading: isDeleting } = useUserDeletePost();
+  const navigate = useNavigate();
 
-  // Profile loading & error
   if (isLoading) return <p>Loading profile...</p>
   if (error) return <p>Failed to load profile: {error.message}</p>
   if (!profile) return <p>No profile data available</p>
+
+  const handleDelete = (postId) => {
+    toast.error((t) => (
+      <div className="flex flex-col gap-3">
+        <p className="text-sm text-gray-800">
+          Are you sure you want to delete this post?
+        </p>
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => {
+              deletePost(postId)  
+              toast.dismiss(t.id) 
+            }}
+            className="px-3 py-1 rounded bg-black text-white hover:bg-white hover:text-black"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 4000,
+    })
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-start p-4">
@@ -97,8 +128,16 @@ const UserProfile = () => {
                   {post.content}
                 </p>
                  <div className="flex gap-3 mt-4">
-                  <button className="px-4 py-2 rounded-lg border border-black bg-black text-white hover:bg-white hover:text-black transition">Update</button>
-                  <button className="px-4 py-2 rounded-lg border border-black bg-white text-black hover:bg-black hover:text-white transition">Delete</button>
+                  <button className="px-4 py-2 rounded-lg border border-black bg-black text-white hover:bg-white hover:text-black transition">
+                    Update
+                  </button>
+                  <button
+                    className="px-4 py-2 rounded-lg border border-black bg-white text-black hover:bg-black hover:text-white transition disabled:opacity-50"
+                    disabled={isDeleting}
+                    onClick={() => handleDelete(post.id)}
+                  >
+                    {isDeleting ? "Deleting..." : "Delete"}
+                  </button>
                 </div>
               </div>
             </div>
