@@ -14,8 +14,8 @@ export const getProfile = async () => {
 export const updateProfile = async (profileData) => {
     try {
         const formData = new FormData();
-        console.log("=== API FUNCTION DEBUG ===");
-        console.log("Original profileData:", profileData); 
+        // console.log("=== API FUNCTION DEBUG ===");
+        // console.log("Original profileData:", profileData); 
         
         Object.keys(profileData).forEach(key => {
             const value = profileData[key];
@@ -23,27 +23,27 @@ export const updateProfile = async (profileData) => {
             if (key === 'image') {
                 if (value instanceof File) {
                     formData.append(key, value);
-                    console.log(`Added image file: ${value.name}, size=${value.size}, type=${value.type}`);
+                    // console.log(`Added image file: ${value.name}, size=${value.size}, type=${value.type}`);
                 } else {
-                    console.log(`Skipped image field (not a file): ${key} =`, typeof value, value);
+                    // console.log(`Skipped image field (not a file): ${key} =`, typeof value, value);
                 }
                 return;
             }
             
             if (value !== null && value !== undefined && value !== "") {
                 formData.append(key, value);
-                console.log(`dded to FormData: ${key} =`, value);
+                // console.log(`dded to FormData: ${key} =`, value);
             } else {
-                console.log(`Skipped empty field: ${key} =`, value);
+                // console.log(`Skipped empty field: ${key} =`, value);
             }
         });
 
-        console.log("Final FormData entries:");
+        // console.log("Final FormData entries:");
         for (let pair of formData.entries()) {
             console.log(`  ${pair[0]}: ${pair[1]}`);
         }
 
-        console.log("Making API call to:", '/api/user/info/');
+        // console.log("Making API call to:", '/api/user/info/');
         
         const response = await axiosInstance.patch('/api/user/info/', formData, {
             headers: {
@@ -51,7 +51,7 @@ export const updateProfile = async (profileData) => {
             },
         });
         
-        console.log("API Response success:", response.data);
+        // console.log("API Response success:", response.data);
         return response.data;
         
     } catch (error) {

@@ -41,3 +41,15 @@ export const userPost = async ()=>{
         throw error;
     }
 }
+
+export const userDeletePost = async (postId)=>{
+    try{
+        const response = await axiosInstance.delete(`/api/post/info/${postId}/`);
+        // toast.success("Deleted Sucessfully");
+        return response.data;
+    } catch(error){
+        // toast.error("Something went wrong try again");
+        console.log(error);
+        throw error;
+    }
+}

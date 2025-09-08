@@ -17,7 +17,7 @@ export const useUpdateProfile = () => {
     return useMutation({
         mutationFn: updateProfile, 
         onSuccess: (data) => { 
-            console.log("Mutation Success:", data);
+            // console.log("Mutation Success:", data);
             queryClient.setQueryData(["profile"], data);
             queryClient.invalidateQueries(["profile"]);
             toast.success("Profile updated successfully!");
