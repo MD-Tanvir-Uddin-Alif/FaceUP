@@ -92,24 +92,6 @@ const UpdateProfile = () => {
 
   return (
     <div>
-      {/* <p>This is update profile: {profile?.username}</p> */}
-
-      {/* <div className="bg-gray-100 p-4 m-4 rounded-lg">
-        <h3 className="font-bold mb-2">Debug Info:</h3>
-        <pre className="text-xs overflow-x-auto">
-          {JSON.stringify(formData, null, 2)}
-        </pre>
-        {updateProfileMutation.error && (
-          <div className="mt-2 p-2 bg-red-100 rounded">
-            <p className="text-red-700 font-semibold">Error Details:</p>
-            <p className="text-red-600 text-sm">
-              {updateProfileMutation.error.response?.data 
-                ? JSON.stringify(updateProfileMutation.error.response.data, null, 2)
-                : updateProfileMutation.error.message}
-            </p>
-          </div>
-        )}
-      </div> */}
 
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-5">
         <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-lg">

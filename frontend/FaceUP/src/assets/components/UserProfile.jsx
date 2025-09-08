@@ -128,7 +128,7 @@ const UserProfile = () => {
                   {post.content}
                 </p>
                  <div className="flex gap-3 mt-4">
-                  <button className="px-4 py-2 rounded-lg border border-black bg-black text-white hover:bg-white hover:text-black transition">
+                  <button onClick={()=> navigate('/post/update/', {state:post})} className="px-4 py-2 rounded-lg border border-black bg-black text-white hover:bg-white hover:text-black transition">
                     Update
                   </button>
                   <button

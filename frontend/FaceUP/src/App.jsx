@@ -14,6 +14,7 @@ import UpdateProfile from './assets/components/UpdateProfile';
 import PostCreate from './assets/components/PostCreate';
 import PublicPost from './assets/components/PublicPost';
 import DetailsPost from './assets/components/DetailsPost';
+import UpdatePost from './assets/components/UpdatePost';
 
 
 
@@ -37,6 +38,7 @@ function App() {
           <Route path='user/profile/' element={<PrivateRoute><UserProfile/></PrivateRoute>}/>
           <Route path='user/profile/update/' element={<PrivateRoute><UpdateProfile/></PrivateRoute>}/>
           <Route path='post/create/' element={<PrivateRoute><PostCreate/></PrivateRoute>}/>
+          <Route path='post/update/' element={<PrivateRoute><UpdatePost/></PrivateRoute>}/>
         </Routes>
         </HashRouter>
         <ReactQueryDevtools initialIsOpen={false}/>
