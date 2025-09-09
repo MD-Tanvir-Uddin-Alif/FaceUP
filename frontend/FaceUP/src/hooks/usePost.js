@@ -73,6 +73,6 @@ export const useUserUpdatePost = ()=>{
       console.log("Mutation error");
       console.log("Error: ", error);
       toast.error("Failed to Update Post");
-    }
-  })
-}
+    },
+  });
+};
