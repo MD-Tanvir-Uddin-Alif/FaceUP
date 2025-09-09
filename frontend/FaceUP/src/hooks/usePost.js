@@ -46,6 +46,7 @@ export const useUserDeletePost = () => {
     mutationFn: userDeletePost,
     onSuccess: (_, postId) => { 
       queryClient.invalidateQueries(["userPosts"]);
+      queryClient.invalidateQueries(["Posts"]);
       toast.success("Post deleted successfully");
     },
     onError: (error) => {

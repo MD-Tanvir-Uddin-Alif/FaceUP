@@ -53,3 +53,5 @@ export const userDeletePost = async (postId)=>{
         throw error;
     }
 }
+
+
