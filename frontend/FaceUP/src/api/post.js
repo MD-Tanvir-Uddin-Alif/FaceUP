@@ -55,3 +55,29 @@ export const userDeletePost = async (postId)=>{
 }
 
 
+export const userUpdatePost = async ({postID, updatedData})=>{
+    try{
+        const formData = new FormData();
+
+        if(updatedData.content){
+            formData.append("content", updatedData.content);
+        }
+        if(updatedData.image){
+            formData.append("image", updatedData.image);
+        }
+
+        const response = await axiosInstance.patch(`/api/post/info/${postID}/`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            }
+        );
+
+        return response.data;
+    }catch (error){
+        console.log(error);
+        throw error;
+    }
+};

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createPost, publicPost, userDeletePost, userPost } from "../api/post";
+import { createPost, publicPost, userDeletePost, userPost, userUpdatePost } from "../api/post";
 import { data } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -55,3 +55,24 @@ export const useUserDeletePost = () => {
     }
   });
 };
+
+
+
+export const useUserUpdatePost = ()=>{
+  const queryClient = useQueryClient();
+
+
+  return useMutation({
+    mutationFn: userUpdatePost,
+    onSuccess: ()=>{
+      queryClient.invalidateQueries(["userPosts"]);
+      queryClient.invalidateQueries(["Posts"]);
+      toast.success("Post Updated Sucessfully");
+    },
+    onError: (error)=>{
+      console.log("Mutation error");
+      console.log("Error: ", error);
+      toast.error("Failed to Update Post");
+    }
+  })
+}
