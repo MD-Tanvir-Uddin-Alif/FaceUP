@@ -55,7 +55,7 @@ export const userDeletePost = async (postId)=>{
 }
 
 
-export const userUpdatePost = async ({postID, updatedData})=>{
+export const userUpdatePost = async ({postId, updatedData})=>{
     try{
         const formData = new FormData();
 
@@ -66,7 +66,7 @@ export const userUpdatePost = async ({postID, updatedData})=>{
             formData.append("image", updatedData.image);
         }
 
-        const response = await axiosInstance.patch(`/api/post/info/${postID}/`,
+        const response = await axiosInstance.patch(`/api/post/info/${postId}/`,
             formData,
             {
                 headers: {

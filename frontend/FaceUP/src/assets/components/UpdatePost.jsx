@@ -10,12 +10,12 @@ const UpdatePost = () => {
   const [content, setContent] = useState(post?.content || "");
   const [image, setImage] = useState(null);
 
-  const { mutate: updatePost, isPending } = useUserUpdatePost();
+  const { mutate: updatepost, isPending } = useUserUpdatePost();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updatePost(
+    updatepost(
       {
         postId: post.id,
         updatedData: { content, image },
