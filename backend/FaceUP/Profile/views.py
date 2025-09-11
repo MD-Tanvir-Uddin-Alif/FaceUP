@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from .models import UserProfileModel
-from .serializers import UserProfileSerializer, UserProfileRegistrationSerializer
+from .serializers import UserProfileSerializer, UserProfileRegistrationSerializer, FriendRequestSerializer
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
@@ -53,4 +53,22 @@ class UserProfileView(RetrieveUpdateAPIView):
         cache_key = f"user_profile_{instence.id}"
         cache.set(cache_key, instence, timeout=60)
         return instence
+
+
+
+class FriendRequestSendView(CreateAPIView):
+    serializer_class = FriendRequestSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
         
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                "message": "Friend request sent successfully.",
+                "data": serializer.data
+                },status=status.HTTP_201_CREATED
+            )
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
