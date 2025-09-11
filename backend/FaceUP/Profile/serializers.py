@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfileModel, FriendRequestModel
+from .models import UserProfileModel, FriendRequestModel, FriendshipModel
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
@@ -92,3 +92,16 @@ class FriendRequestSerializer(serializers.ModelSerializer):
         validated_data['to_user'] = to_user
         validated_data['from_user'] = self.context['request'].user
         return super().create(validated_data)
+
+
+class FriendshipSerializer(serializers.ModelSerializer):
+    friend = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = FriendshipModel
+        fields = ['id', 'friend', 'created_at']
+    
+    def get_friend(self, obj):
+        current_user = self.context['request'].user
+        friend = obj.user2 if obj.user1 == current_user else obj.user1
+        return UserProfileSerializer(friend).data
