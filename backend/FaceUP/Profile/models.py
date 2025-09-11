@@ -13,7 +13,7 @@ class UserProfileModel(AbstractUser):
         return f"{self.username}"
 
 
-class FriendRequset(models.Model):
+class FriendRequestModel(models.Model):
     STATUS_CHOICES = [
         ('pending','Pending'),
         ('accepted', 'Accepted'),

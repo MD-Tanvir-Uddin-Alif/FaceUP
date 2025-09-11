@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfileModel, FriendRequset
+from .models import UserProfileModel, FriendRequestModel
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
@@ -63,7 +63,7 @@ class FriendRequestSerializer(serializers.ModelSerializer):
     to_user_id = serializers.IntegerField(write_only=True)
     
     class Meta:
-        model =FriendRequset
+        model =FriendRequestModel
         fields = ['id', 'from_user', 'to_user', 'to_user_id',  'status', 'created_at']
         read_only_fields = ['from_user', 'status', 'created_at']
     
@@ -78,10 +78,10 @@ class FriendRequestSerializer(serializers.ModelSerializer):
         if from_user.id == value:
             raise serializers.ValidationError("You cannot send a friend request to yourself.")
         
-        if FriendRequset.objects.filter(from_user=from_user, to_user=to_user).exists():
+        if FriendRequestModel.objects.filter(from_user=from_user, to_user=to_user).exists():
             raise serializers.ValidationError("Friend request already sent.")
         
-        if FriendRequset.objects.filter(from_user=to_user, to_user=from_user, status='pending').exists():
+        if FriendRequestModel.objects.filter(from_user=to_user, to_user=from_user, status='pending').exists():
             raise serializers.ValidationError("This user has already sent you a friend request.")
         
         return value

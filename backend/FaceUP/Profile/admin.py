@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfileModel, FriendRequset
+from .models import UserProfileModel, FriendRequestModel
 # Register your models here.
 
 
@@ -10,8 +10,8 @@ class UserProfileadmin(admin.ModelAdmin):
     search_fields =  ('email', 'username',)
 
 
-@admin.register(FriendRequset)
-class FrinedRequestAsmin(admin.ModelAdmin):
-    model = FriendRequset
+@admin.register(FriendRequestModel)
+class FrinedRequestAdmin(admin.ModelAdmin):
+    model = FriendRequestModel
     list_display = ('id', 'from_user', 'to_user', 'created_at', 'updated_at')
     search_fields = ('from_user', 'to_user')

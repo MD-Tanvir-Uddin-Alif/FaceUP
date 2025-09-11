@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from .models import UserProfileModel
+from .models import UserProfileModel, FriendRequestModel
 from .serializers import UserProfileSerializer, UserProfileRegistrationSerializer, FriendRequestSerializer
-from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -72,3 +72,12 @@ class FriendRequestSendView(CreateAPIView):
             )
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class PendingFriendRequestView(ListAPIView):
+    serializer_class = FriendRequestSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return FriendRequestModel.objects.filter(to_user=self.request.user, status='pending')
