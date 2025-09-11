@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.db import transaction
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from .models import UserProfileModel, FriendRequestModel
+from .models import UserProfileModel, FriendRequestModel, FriendshipModel
 from .serializers import UserProfileSerializer, UserProfileRegistrationSerializer, FriendRequestSerializer, FriendshipSerializer
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView, UpdateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -105,6 +106,43 @@ class RejectFriendRequestView(UpdateAPIView):
                 {"message": "Friend request rejected successfully."},
                 status=status.HTTP_200_OK
             )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class AcceptFriendRequestView(UpdateAPIView):
+    serializer_class = FriendRequestSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'pk'
+    
+    def get_queryset(self):
+        return FriendRequestModel.objects.filter(
+            to_user=self.request.user,
+            status='pending'
+        )
+    
+    def update(self, request, *args, **kwargs):
+        try:
+            friend_request = self.get_object()
+            
+            with transaction.atomic():
+                friend_request.status = 'accepted'
+                friend_request.save()
+                
+                user1, user2 = friend_request.from_user, friend_request.to_user
+                if user1.id > user2.id:
+                    user1, user2 = user2, user1
+                
+                FriendshipModel.objects.get_or_create(user1=user1, user2=user2)
+                
+                return Response(
+                    {"message": "Friend request accepted successfully."},
+                    status=status.HTTP_200_OK
+                )
+                
         except Exception as e:
             return Response(
                 {"error": str(e)},
