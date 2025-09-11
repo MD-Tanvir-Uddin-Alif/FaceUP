@@ -40,3 +40,27 @@ class FriendRequestModel(models.Model):
     
     def __str__(self):
         return f"{self.from_user.username} -> {self.to_user.username} ({self.status})"
+
+
+class FriendshipModel(models.Model):
+    user1 = models.ForeignKey(UserProfileModel, on_delete=models.CASCADE, related_name='friendships_as_user1')
+    user2 = models.ForeignKey(UserProfileModel, on_delete=models.CASCADE, related_name='friendships_as_user2')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('user1', 'user2')
+        ordering = ['-created_at']
+    
+    def clean(self):
+        if self.user1 == self.user2:
+            raise ValidationError("Users cannot be friends with themselves.")
+        
+        if self.user1.id > self.user2.id:
+            self.user1, self.user2 = self.user2, self.user1
+    
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"{self.user1.username} <-> {self.user2.username}"
