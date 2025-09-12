@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from .models import UserProfileModel, FriendRequestModel, FriendshipModel
 from .serializers import UserProfileSerializer, UserProfileRegistrationSerializer, FriendRequestSerializer, FriendshipSerializer
-from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -143,6 +143,33 @@ class AcceptFriendRequestView(UpdateAPIView):
                     status=status.HTTP_200_OK
                 )
                 
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class CancelFriendRequestView(DestroyAPIView):
+    serializer_class = FriendRequestSendView
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'pk'
+    
+    def get_queryset(self):
+        return FriendRequestModel.objects.filter(
+            from_user = self.request.user,
+            status='pending'
+        )
+    
+    def destroy(self, request, *args, **kwargs):
+        try:
+            friend_request = self.get_object()
+            friend_request.delete()
+            
+            return Response(
+                {"message": "Friend request cancelled successfully."},
+                status=status.HTTP_200_OK
+            )
         except Exception as e:
             return Response(
                 {"error": str(e)},
