@@ -185,3 +185,46 @@ class FriendListView(ListAPIView):
         return FriendshipModel.objects.filter(
             models.Q(user1=self.request.user) | models.Q(user2=self.request.user)
         )
+
+
+class RemoveFriend(DestroyAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return UserProfileModel.objects.exclude(id=self.request.user.id)
+    
+    def destroy(self, request, *args, **kwargs):
+        try:
+            friend = self.get_object()
+            current_user = request.user
+            
+            with transaction.atomic():
+                friendship = FriendshipModel.objects.filter(
+                    models.Q(user1=current_user, user2=friend) | 
+                    models.Q(user1=friend, user2=current_user)
+                ).first()
+                
+                if friendship:
+                    friendship.delete()
+                    
+                    FriendRequestModel.objects.filter(
+                        models.Q(from_user=current_user, to_user=friend) |
+                        models.Q(from_user=friend, to_user=current_user)
+                    ).delete()
+                    
+                    return Response(
+                        {"message": "Friend removed successfully."},
+                        status=status.HTTP_200_OK
+                    )
+                else:
+                    return Response(
+                        {"error": "You are not friends with this user."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+        
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
