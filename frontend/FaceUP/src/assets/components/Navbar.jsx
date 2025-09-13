@@ -79,6 +79,9 @@ const Navbar = () => {
                 <div class="flex items-center space-x-6">
                     <NavLink to='/' className={({ isActive }) => `text-black font-semibold ${isActive ? 'underline' : ''}`}>Home</NavLink>
                     <NavLink to='/public/post/' className={({ isActive }) => `text-black font-semibold ${isActive ? 'underline' : ''}`}>Posts</NavLink>
+                    {isLogin?(
+                      <NavLink to='/people/' className={({ isActive }) => `text-black font-semibold ${isActive ? 'underline' : ''}`}>People</NavLink>
+                    ):null}
                 </div>
 
                 <div>

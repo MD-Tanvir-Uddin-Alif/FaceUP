@@ -15,6 +15,7 @@ import PostCreate from './assets/components/PostCreate';
 import PublicPost from './assets/components/PublicPost';
 import DetailsPost from './assets/components/DetailsPost';
 import UpdatePost from './assets/components/UpdatePost';
+import People from './assets/components/People';
 
 
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='user/login/' element={<Login/>}/>
           <Route path='public/post/' element={<PublicPost/>}/>
           <Route path='post/detail/' element={<DetailsPost/>}/>
+          <Route path='people/' element={<PrivateRoute><People/></PrivateRoute>}/>
           <Route path='user/profile/' element={<PrivateRoute><UserProfile/></PrivateRoute>}/>
           <Route path='user/profile/update/' element={<PrivateRoute><UpdateProfile/></PrivateRoute>}/>
           <Route path='post/create/' element={<PrivateRoute><PostCreate/></PrivateRoute>}/>
