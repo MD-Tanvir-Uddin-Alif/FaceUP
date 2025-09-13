@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db import transaction
+from django.db import transaction, models
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from .models import UserProfileModel, FriendRequestModel, FriendshipModel
@@ -175,3 +175,13 @@ class CancelFriendRequestView(DestroyAPIView):
                 {"error": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class FriendListView(ListAPIView):
+    serializer_class =  FriendshipSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return FriendshipModel.objects.filter(
+            models.Q(user1=self.request.user) | models.Q(user2=self.request.user)
+        )
