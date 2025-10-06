@@ -70,3 +70,14 @@ export const updateProfile = async (profileData) => {
         throw error;
     }
 }
+
+
+export const getAllUser = async()=>{
+    try{
+        const response = await axiosInstance.get('api/user/all-user/')
+        return response.data;
+    }catch(error){
+        console.log(error);
+        throw(error);
+    }
+}

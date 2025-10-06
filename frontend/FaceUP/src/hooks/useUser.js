@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getProfile, updateProfile } from "../api/user"
+import { getAllUser, getProfile, updateProfile } from "../api/user"
 import { toast } from "react-toastify";
+import AllPeople from "../assets/components/AllPeople";
 
 export const useUserProfile = () => {
     return useQuery({
@@ -47,4 +48,14 @@ export const useUpdateProfile = () => {
             toast.error(errorMessage);
         },
     });
+}
+
+
+export const useAllUser = ()=>{
+    return useQuery({
+        queryKey: ["AllUser"],
+        queryFn: getAllUser,
+        staleTime: 5 * 60 * 1000,
+        retry: 2
+    })
 }
