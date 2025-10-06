@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import UserProfileCreateView, LogoutView, UserProfileView, FriendRequestSendView, PendingFriendRequestView, RejectFriendRequestView, AcceptFriendRequestView, CancelFriendRequestView, FriendListView, RemoveFriend
+from .views import UserProfileCreateView, LogoutView, UserProfileView, FriendRequestSendView, PendingFriendRequestView, RejectFriendRequestView, AcceptFriendRequestView, CancelFriendRequestView, FriendListView, RemoveFriend, AllUserView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView
 )
 
 urlpatterns = [
+    # user url
     path('registration/',UserProfileCreateView.as_view(), name="user_registration"),
     path('login/', TokenObtainPairView.as_view(), name="user_login"),
     path('refresh-token/', TokenRefreshView.as_view(), name="refresh_token"),
@@ -22,4 +23,7 @@ urlpatterns = [
     path('friend-request/<int:pk>/cancel/', CancelFriendRequestView.as_view(), name="user_cancel_friend_requests"),
     path('friends/', FriendListView.as_view(), name="user_friendlist"),
     path('friend/<int:pk>/remove/', RemoveFriend.as_view(), name="user_friend_remove"),
+    
+    
+    path('all-user/', AllUserView.as_view(), name='get all the user')
 ]
