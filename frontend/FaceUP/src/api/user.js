@@ -105,3 +105,14 @@ export const getPendingRequest = async()=>{
         throw(error);
     }
 }
+
+
+export const cancelRequest = async(requestID)=>{
+    try{
+        const res = await axiosInstance.put(`/api/user/friend-request/${requestID}/reject/`);
+        return res.data
+    }catch(error){
+        console.log("error form api");
+        throw(error);
+    }
+}

@@ -15,19 +15,27 @@ const PendingRequest = () => {
           >
             <div className="flex items-center gap-4">
               <img
-                src={user.image}
-                alt={user.username}
+                src={user.from_user.image}
+                alt={user.from_user.username}
                 className="h-14 w-14 rounded-full object-cover"
               />
               <div className="flex flex-col justify-center">
-                <p className="text-base font-medium text-black">{user.username}</p>
+                <p className="text-base font-medium text-black">{user.from_user.username}</p>
               </div>
             </div>
-            <button
-            className="h-8 rounded-lg bg-gray-200 px-4 text-sm font-medium text-black hover:bg-gray-300">
-              Cancel Request
-            </button>
-          </div>
+            <div className="flex gap-2">
+                <button
+                    className="h-8 rounded-lg bg-gray-200 px-4 text-sm font-medium text-black hover:bg-gray-300"
+                >
+                    Accept Request
+                </button>
+                <button
+                    className="h-8 rounded-lg bg-gray-200 px-4 text-sm font-medium text-black hover:bg-gray-300"
+                >
+                    Cancel Request
+                </button>
+                </div>
+            </div>
         ))
       ) : null}
     </div>
