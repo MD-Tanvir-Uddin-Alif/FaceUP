@@ -17,6 +17,7 @@ import DetailsPost from './assets/components/DetailsPost';
 import UpdatePost from './assets/components/UpdatePost';
 import People from './assets/components/People';
 import AllPeople from './assets/components/AllPeople';
+import PendingRequest from './assets/components/PendingRequest';
 
 
 
@@ -39,6 +40,7 @@ function App() {
           <Route path='post/detail/' element={<DetailsPost/>}/>
           <Route path='people/' element={<PrivateRoute><People/></PrivateRoute>}>
             <Route path='all-user/' element={<PrivateRoute><AllPeople/></PrivateRoute>}/>
+            <Route path='pending-request/' element={<PrivateRoute><PendingRequest/></PrivateRoute>}></Route>
           </Route>
           <Route path='user/profile/' element={<PrivateRoute><UserProfile/></PrivateRoute>}/>
           <Route path='user/profile/update/' element={<PrivateRoute><UpdateProfile/></PrivateRoute>}/>

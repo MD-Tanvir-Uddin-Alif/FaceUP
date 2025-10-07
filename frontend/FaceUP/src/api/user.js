@@ -81,3 +81,27 @@ export const getAllUser = async()=>{
         throw(error);
     }
 }
+
+
+export const usersendFriendRequest = async (requestID)=>{
+    try{
+        const res = await axiosInstance.post('api/user/friend-request/send/',{
+            'to_user_id':requestID
+        });
+        return res.data;
+    }catch(error){
+        console.log("error form api");
+        console.log(error);
+        throw(error)
+    }
+}
+
+export const getPendingRequest = async()=>{
+    try{
+        const res = await axiosInstance.get('/api/user/friend-request/pending/');
+        return res.data
+    }catch(error){
+        console.log("error from api");
+        throw(error);
+    }
+}

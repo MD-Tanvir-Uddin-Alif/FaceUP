@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getAllUser, getProfile, updateProfile } from "../api/user"
+import { getAllUser, getPendingRequest, getProfile, updateProfile, usersendFriendRequest } from "../api/user"
 import { toast } from "react-toastify";
 import AllPeople from "../assets/components/AllPeople";
 
@@ -57,5 +57,27 @@ export const useAllUser = ()=>{
         queryFn: getAllUser,
         staleTime: 5 * 60 * 1000,
         retry: 2
+    })
+}
+
+export const useUserFreendRequest = ()=>{
+    return useMutation({
+        mutationFn: usersendFriendRequest,
+        onSuccess: (data)=>{
+            toast.success("Friend request send sucessfully");
+        },
+        onError:(error)=>{
+            toast.error("Unavle to send friend Request");
+        }
+    })
+}
+
+
+export const useGetPendingRequest = ()=>{
+    return useQuery({
+        queryKey: ["pending_request"],
+        queryFn: getPendingRequest,
+        staleTime: 5 * 60 * 1000,
+        retry: 2,
     })
 }

@@ -1,20 +1,14 @@
 import React from 'react'
-import { useAllUser, useUserFreendRequest } from '../../hooks/useUser'
+import { useGetPendingRequest } from '../../hooks/useUser'
 
-const AllPeople = () => {
-  const { data: AllUser, isLoading: UserLoading, error: UserError } = useAllUser();
-  const {mutate: sendRequest, isLoading: reqLoading, error: reqError} = useUserFreendRequest();
-
-  const handleFriendRequest = (sendID)=>{
-    sendRequest(sendID);
-  }
-
+const PendingRequest = () => {
+    const {data: pendingRequest, isLoading: penUserLoading, error: penUsererror} = useGetPendingRequest();
   return (
     <div>
       <h3 className="px-4 pt-4 pb-2 text-lg font-bold text-black">All People</h3>
 
-      {AllUser?.length > 0 ? (
-        AllUser.map((user) => (
+      {pendingRequest?.length > 0 ? (
+        pendingRequest.map((user) => (
           <div
             key={user.id}
             className="flex min-h-20 items-center justify-between gap-4 bg-white px-4 py-2 border rounded-md"
@@ -30,16 +24,14 @@ const AllPeople = () => {
               </div>
             </div>
             <button
-            onClick={()=>handleFriendRequest(user.id)}
-            disabled={reqLoading}
             className="h-8 rounded-lg bg-gray-200 px-4 text-sm font-medium text-black hover:bg-gray-300">
-              {reqLoading? 'Sending....':'Send Requset'}
+              Cancel Request
             </button>
           </div>
         ))
       ) : null}
     </div>
   );
-};
+}
 
-export default AllPeople;
+export default PendingRequest

@@ -9,6 +9,7 @@ const People = () => {
 
   const navItems = [
     { path: '/people/all-user', label: 'People' },
+    { path: '/people/pending-request/', label: 'pending-request' },
     // { path: '/dashboard/create-event', label: 'Create Event' },
     // { path: '/dashboard/events', label: 'Events' },
   ];
