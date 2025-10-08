@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { cancelRequest, getAllUser, getPendingRequest, getProfile, updateProfile, usersendFriendRequest } from "../api/user"
+import { cancelRequest, getAllUser, getPendingRequest, getProfile, getUserFriends, updateProfile, usersendFriendRequest } from "../api/user"
 import { toast } from "react-toastify";
 import AllPeople from "../assets/components/AllPeople";
 
@@ -113,3 +113,11 @@ export const useAcceptlRequest = ()=>{
     })
 }
 
+export const useGetUserFriends = ()=>{
+    return useQuery({
+        queryKey: ["User_Friends"],
+        queryFn: getUserFriends,
+        staleTime: 5 * 60 * 1000,
+        retry: 2,
+    })
+}

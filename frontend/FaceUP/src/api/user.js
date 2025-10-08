@@ -127,3 +127,13 @@ export const AcceptRequest = async(requestID)=>{
         throw(error);
     }
 }
+
+export const getUserFriends = async ()=>{
+    try{
+        const response = await axiosInstance.get('/api/user/friends/');
+        return response.data
+    }catch(error){
+        console.log("error form api");
+        throw(error);
+    }
+}
