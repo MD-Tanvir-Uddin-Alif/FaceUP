@@ -90,7 +90,7 @@ export const useCancelRequest = ()=>{
         mutationFn: cancelRequest,
         onSuccess: (data)=>{
             queryClient.invalidateQueries(["pending_request"]);
-            toast.success('Accepted as friend');
+            toast.success('Cancel friend request');
         },
         onError: (error)=>{
             toast.error("Something went worng");
