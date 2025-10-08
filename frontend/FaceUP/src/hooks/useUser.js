@@ -97,3 +97,19 @@ export const useCancelRequest = ()=>{
         }
     })
 }
+
+export const useAcceptlRequest = ()=>{
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: cancelRequest,
+        onSuccess: (data)=>{
+            queryClient.invalidateQueries(["pending_request"]);
+            toast.success('Accepted as friend ');
+        },
+        onError: (error)=>{
+            toast.error("Something went worng");
+        }
+    })
+}
+

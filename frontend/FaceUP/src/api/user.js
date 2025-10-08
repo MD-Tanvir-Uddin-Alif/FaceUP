@@ -118,3 +118,12 @@ export const cancelRequest = async(requestID)=>{
 }
 
 
+export const AcceptRequest = async(requestID)=>{
+    try{
+        const res = await axiosInstance.put(`/api/user/friend-request/${requestID}/accept/`);
+        return res.data
+    }catch(error){
+        console.log("error form api");
+        throw(error);
+    }
+}
