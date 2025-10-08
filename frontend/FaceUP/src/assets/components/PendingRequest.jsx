@@ -1,9 +1,10 @@
 import React from 'react'
-import { useCancelRequest, useGetPendingRequest } from '../../hooks/useUser'
+import { useAcceptlRequest, useCancelRequest, useGetPendingRequest } from '../../hooks/useUser'
 
 const PendingRequest = () => {
     const {data: pendingRequest, isLoading: penUserLoading, error: penUsererror} = useGetPendingRequest();
     const {mutate: cancelRequest, isLoading: canLoading, error: canError} = useCancelRequest();
+    const {mutate: acceptRequest, isLoading: accLoading, error: accError} = useAcceptlRequest()
 
     // console.log(pendingRequest);
 
@@ -11,6 +12,12 @@ const PendingRequest = () => {
       console.log(reqID);
       cancelRequest(reqID);
     }
+
+    const handelAcceptRequest = (reqID)=>{
+      console.log(reqID);
+      acceptRequest(reqID);
+    }
+
   return (
     <div>
       <h3 className="px-4 pt-4 pb-2 text-lg font-bold text-black">All People</h3>
@@ -33,6 +40,8 @@ const PendingRequest = () => {
             </div>
             <div className="flex gap-2">
                 <button
+                    disabled={accLoading}
+                    onClick={()=>handelAcceptRequest(request.id)}
                     className="h-8 rounded-lg bg-gray-200 px-4 text-sm font-medium text-black hover:bg-gray-300"
                 >
                     Accept Request
