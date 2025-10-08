@@ -10,17 +10,17 @@ const Friends = () => {
       {friends?.length > 0 ? (
         friends.map((friend) => (
           <div
-            key={friend.id}
+            key={friend.friend.id}
             className="flex min-h-20 items-center justify-between gap-4 bg-white px-4 py-2 border rounded-md"
           >
             <div className="flex items-center gap-4">
               <img
-                src={friend.image}
-                alt={friend.username}
+                src={friend.friend.image}
+                alt={friend.friend.username}
                 className="h-14 w-14 rounded-full object-cover"
               />
               <div className="flex flex-col justify-center">
-                <p className="text-base font-medium text-black">{friend.username}</p>
+                <p className="text-base font-medium text-black">{friend.friend.username}</p>
               </div>
             </div>
             <button

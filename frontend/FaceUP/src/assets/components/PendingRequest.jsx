@@ -9,12 +9,12 @@ const PendingRequest = () => {
     // console.log(pendingRequest);
 
     const handelCancelRequest = (reqID)=>{
-      console.log(reqID);
+      // console.log(reqID);
       cancelRequest(reqID);
     }
 
     const handelAcceptRequest = (reqID)=>{
-      console.log(reqID);
+      // console.log(reqID);
       acceptRequest(reqID);
     }
 

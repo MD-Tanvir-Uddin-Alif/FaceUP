@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { cancelRequest, getAllUser, getPendingRequest, getProfile, getUserFriends, updateProfile, usersendFriendRequest } from "../api/user"
+import { AcceptRequest, cancelRequest, getAllUser, getPendingRequest, getProfile, getUserFriends, updateProfile, usersendFriendRequest } from "../api/user"
 import { toast } from "react-toastify";
 import AllPeople from "../assets/components/AllPeople";
 
@@ -102,7 +102,7 @@ export const useAcceptlRequest = ()=>{
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: cancelRequest,
+        mutationFn: AcceptRequest,
         onSuccess: (data)=>{
             queryClient.invalidateQueries(["pending_request"]);
             toast.success('Accepted as friend ');
